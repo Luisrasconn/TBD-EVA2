@@ -1,0 +1,219 @@
+MySQL Shell 8.4.10
+
+Copyright (c) 2016, 2026, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+WARNING: Found errors loading plugins, for more details look at the log at: C:\Users\fdo_g\AppData\Roaming\MySQL\mysqlsh\mysqlsh.log
+ MySQL  SQL > \connect root@localhost:3307
+Creating a session to 'root@localhost:3307'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 12
+Server version: 11.4.9-MariaDB MariaDB Server
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3307  SQL > show databses;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'databses' at line 1
+ MySQL  localhost:3307  SQL > show database;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'database' at line 1
+ MySQL  localhost:3307  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| employees          |
+| eva1               |
+| eva1_copia         |
+| eva2               |
+| information_schema |
+| mysql              |
+| northwind          |
+| performance_schema |
+| sakila             |
+| sys                |
+| tbd_exa1           |
+| test               |
+| world_x            |
++--------------------+
+13 rows in set (0.0020 sec)
+ MySQL  localhost:3307  SQL > use eva2;
+Default schema set to `eva2`.
+Fetching global names, object names from `eva2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3307  eva2  SQL > show tables;
++----------------+
+| Tables_in_eva2 |
++----------------+
+| tablaa         |
+| tablab         |
++----------------+
+2 rows in set (0.0007 sec)
+ MySQL  localhost:3307  eva2  SQL > create table cliente(
+                                 -> id_cliente int not null key auto_increment,
+                                 -> nombre varchar(50) not null,
+                                 -> apellidos varchar(50) not null,
+                                 -> fecha_nac date);
+Query OK, 0 rows affected (0.0270 sec)
+ MySQL  localhost:3307  eva2  SQL > insert into cliente(nombre,apellidos,fecha_nac)
+                                 -> values("juan","guadarrama","1988-08-13"),("pedro","carmin","1990-09-17"),("Carmen","cadenita","2000-09-09");
+Query OK, 3 rows affected (0.0091 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3307  eva2  SQL > select*from cliente;
++------------+--------+------------+------------+
+| id_cliente | nombre | apellidos  | fecha_nac  |
++------------+--------+------------+------------+
+|          1 | juan   | guadarrama | 1988-08-13 |
+|          2 | pedro  | carmin     | 1990-09-17 |
+|          3 | Carmen | cadenita   | 2000-09-09 |
++------------+--------+------------+------------+
+3 rows in set (0.0019 sec)
+ MySQL  localhost:3307  eva2  SQL > create table ventas(
+                                 -> id_ventas int not null key auto_increment,
+                                 -> id_cliente int not null,
+                                 -> fecha_venta date);
+Query OK, 0 rows affected (0.0064 sec)
+ MySQL  localhost:3307  eva2  SQL > insert into ventas(id_cliente,fecha_venta)
+                                 -> values(1,"2026-09-11"),(1,"2026-09-13"),(2,"2026-08-14"),(3,"2026-04-18"),(9,"2026-09-19");
+Query OK, 5 rows affected (0.0043 sec)
+
+Records: 5  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3307  eva2  SQL > select from*ventas;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'from*ventas' at line 1
+ MySQL  localhost:3307  eva2  SQL > select*from ventas;
++-----------+------------+-------------+
+| id_ventas | id_cliente | fecha_venta |
++-----------+------------+-------------+
+|         1 |          1 | 2026-09-11  |
+|         2 |          1 | 2026-09-13  |
+|         3 |          2 | 2026-08-14  |
+|         4 |          3 | 2026-04-18  |
+|         5 |          9 | 2026-09-19  |
++-----------+------------+-------------+
+5 rows in set (0.0008 sec)
+ MySQL  localhost:3307  eva2  SQL > select *from cliente
+                                 -> where id_cliente in (select distinct(id_cliente)
+                                 -> from venta);
+ERROR: 1146 (42S02): Table 'eva2.venta' doesn't exist
+ MySQL  localhost:3307  eva2  SQL > select *from cliente where id_cliente in (select distinct(id_cliente) from ventas);
++------------+--------+------------+------------+
+| id_cliente | nombre | apellidos  | fecha_nac  |
++------------+--------+------------+------------+
+|          1 | juan   | guadarrama | 1988-08-13 |
+|          2 | pedro  | carmin     | 1990-09-17 |
+|          3 | Carmen | cadenita   | 2000-09-09 |
++------------+--------+------------+------------+
+3 rows in set (0.0046 sec)
+ MySQL  localhost:3307  eva2  SQL > select *from cliente where id_cliente not in (select distinct(id_cliente) from ventas);
+Empty set (0.0044 sec)
+ MySQL  localhost:3307  eva2  SQL > select *from cliente where id_cliente not in (select distinct(id_cliente) from ventas);
+Empty set (0.0007 sec)
+ MySQL  localhost:3307  eva2  SQL > desc cliente;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id_cliente | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre     | varchar(50) | NO   |     | NULL    |                |
+| apellidos  | varchar(50) | NO   |     | NULL    |                |
+| fecha_nac  | date        | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.0213 sec)
+ MySQL  localhost:3307  eva2  SQL > desc ventas;
++-------------+---------+------+-----+---------+----------------+
+| Field       | Type    | Null | Key | Default | Extra          |
++-------------+---------+------+-----+---------+----------------+
+| id_ventas   | int(11) | NO   | PRI | NULL    | auto_increment |
+| id_cliente  | int(11) | NO   |     | NULL    |                |
+| fecha_venta | date    | YES  |     | NULL    |                |
++-------------+---------+------+-----+---------+----------------+
+3 rows in set (0.0339 sec)
+ MySQL  localhost:3307  eva2  SQL > select * from venta
+                                 -> where id_cliente=1;1
+ERROR: 1146 (42S02): Table 'eva2.venta' doesn't exist
+                                 -> ^C
+ MySQL  localhost:3307  eva2  SQL > select * from venta
+                                 -> where id_cliente=1;
+ERROR: 1146 (42S02): Table 'eva2.venta' doesn't exist
+ MySQL  localhost:3307  eva2  SQL > select * from ventas where id_cliente=1;
++-----------+------------+-------------+
+| id_ventas | id_cliente | fecha_venta |
++-----------+------------+-------------+
+|         1 |          1 | 2026-09-11  |
+|         2 |          1 | 2026-09-13  |
++-----------+------------+-------------+
+2 rows in set (0.0008 sec)
+ MySQL  localhost:3307  eva2  SQL > select * from clientes;
+ERROR: 1146 (42S02): Table 'eva2.clientes' doesn't exist
+ MySQL  localhost:3307  eva2  SQL > select * from cliente;
++------------+--------+------------+------------+
+| id_cliente | nombre | apellidos  | fecha_nac  |
++------------+--------+------------+------------+
+|          1 | juan   | guadarrama | 1988-08-13 |
+|          2 | pedro  | carmin     | 1990-09-17 |
+|          3 | Carmen | cadenita   | 2000-09-09 |
++------------+--------+------------+------------+
+3 rows in set (0.0005 sec)
+ MySQL  localhost:3307  eva2  SQL > select *from ventas;
++-----------+------------+-------------+
+| id_ventas | id_cliente | fecha_venta |
++-----------+------------+-------------+
+|         1 |          1 | 2026-09-11  |
+|         2 |          1 | 2026-09-13  |
+|         3 |          2 | 2026-08-14  |
+|         4 |          3 | 2026-04-18  |
+|         5 |          9 | 2026-09-19  |
++-----------+------------+-------------+
+5 rows in set (0.0004 sec)
+ MySQL  localhost:3307  eva2  SQL > isnert into cliente
+                                 -> value(1,"juan","guadarrama","1990-08-18");
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'isnert into cliente
+value(1,"juan","guadarrama","1990-08-18")' at line 1
+ MySQL  localhost:3307  eva2  SQL > drop table ventas;
+Query OK, 0 rows affected (0.0082 sec)
+ MySQL  localhost:3307  eva2  SQL > create table venta( id_venta int not null key auto_increment, id_cliente int not null reference cliente(id_cliente), fecha_venta date);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'cliente(id_cliente), fecha_venta date)' at line 1
+ MySQL  localhost:3307  eva2  SQL > create table venta( id_venta int not null key auto_increment, id_cliente int not null reference cliente(id_cliente), fecha_venta date);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'cliente(id_cliente), fecha_venta date)' at line 1
+ MySQL  localhost:3307  eva2  SQL > create table venta( id_venta int not null key auto_increment, id_cliente int not null references cliente(id_cliente), fecha_venta date);
+Query OK, 0 rows affected (0.0073 sec)
+ MySQL  localhost:3307  eva2  SQL > insert into venta(id_cliente,fecha_venta) value(5,"2026-09-19");
+Query OK, 1 row affected (0.0027 sec)
+ MySQL  localhost:3307  eva2  SQL > drop table venta;
+Query OK, 0 rows affected (0.0074 sec)
+ MySQL  localhost:3307  eva2  SQL > create table venta( id_venta int not null key auto_increment, id_cliente int not null , fecha_venta date,foreing key (id_cliente)references cliente(id_cliente));
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id_cliente)references cliente(id_cliente))' at line 1
+ MySQL  localhost:3307  eva2  SQL > create table venta( id_venta int not null key auto_increment, id_cliente int not null , fecha_venta date,foreign key (id_cliente)references cliente(id_cliente));
+Query OK, 0 rows affected (0.0081 sec)
+ MySQL  localhost:3307  eva2  SQL > insert into venta(id_cliente,fecha_venta) value(1,"2026-09-19");
+Query OK, 1 row affected (0.0023 sec)
+ MySQL  localhost:3307  eva2  SQL > insert into venta(id_cliente,fecha_venta) value(5,"2026-09-19");
+Query OK, 1 row affected (0.0004 sec)
+ MySQL  localhost:3307  eva2  SQL > insert into venta(id_cliente,fecha_venta) value(5,"2026-09-19");
+Query OK, 1 row affected (0.0004 sec)
+ MySQL  localhost:3307  eva2  SQL > insert into venta(id_cliente,fecha_venta) value(99,"2026-09-19");
+Query OK, 1 row affected (0.0004 sec)
+ MySQL  localhost:3307  eva2  SQL > select*from cliente;
++------------+--------+------------+------------+
+| id_cliente | nombre | apellidos  | fecha_nac  |
++------------+--------+------------+------------+
+|          1 | juan   | guadarrama | 1988-08-13 |
+|          2 | pedro  | carmin     | 1990-09-17 |
+|          3 | Carmen | cadenita   | 2000-09-09 |
++------------+--------+------------+------------+
+3 rows in set (0.0006 sec)
+ MySQL  localhost:3307  eva2  SQL > isnert into cliente  value(1,"juan","guadarrama","1990-08-18");
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'isnert into cliente  value(1,"juan","guadarrama","1990-08-18")' at line 1
+ MySQL  localhost:3307  eva2  SQL > select *from ventas;^C
+ MySQL  localhost:3307  eva2  SQL > delete from cliente
+                                 -> where id_cliente=1;
+Query OK, 1 row affected (0.0057 sec)
+ MySQL  localhost:3307  eva2  SQL > update cliente
+                                 -> set
+                                 -> id_cliente = 5
+                                 -> where id_cliente=1;
+Query OK, 0 rows affected (0.0028 sec)
+
+Rows matched: 0  Changed: 0  Warnings: 0
+ MySQL  localhost:3307  eva2  SQL > update cliente set id_cliente = 5 where id_cliente=2;
+Query OK, 1 row affected (0.0018 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3307  eva2  SQL >
