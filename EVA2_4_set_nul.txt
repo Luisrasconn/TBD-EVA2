@@ -1,0 +1,185 @@
+MySQL Shell 8.4.10
+
+Copyright (c) 2016, 2026, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+WARNING: Found errors loading plugins, for more details look at the log at: C:\Users\fdo_g\AppData\Roaming\MySQL\mysqlsh\mysqlsh.log
+ MySQL  SQL > \connect root@localhost:3307
+Creating a session to 'root@localhost:3307'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 6
+Server version: 11.4.9-MariaDB MariaDB Server
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3307  SQL > SET GLOBAL default_storage_engine = 'InnoDB';
+Query OK, 0 rows affected (0.0017 sec)
+ MySQL  localhost:3307  SQL > SET SESSION default_storage_engine = 'InnoDB';
+Query OK, 0 rows affected (0.0003 sec)
+ MySQL  localhost:3307  SQL > SHOW VARIABLES LIKE 'default_storage_engine';
++------------------------+--------+
+| Variable_name          | Value  |
++------------------------+--------+
+| default_storage_engine | InnoDB |
++------------------------+--------+
+1 row in set (0.0038 sec)
+ MySQL  localhost:3307  SQL > use eva2;
+Default schema set to `eva2`.
+Fetching global names, object names from `eva2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3307  eva2  SQL > desc venta
+                                 -> ;
++-------------+---------+------+-----+---------+----------------+
+| Field       | Type    | Null | Key | Default | Extra          |
++-------------+---------+------+-----+---------+----------------+
+| id_venta    | int(11) | NO   | PRI | NULL    | auto_increment |
+| id_cliente  | int(11) | NO   | MUL | NULL    |                |
+| fecha_venta | date    | YES  |     | NULL    |                |
++-------------+---------+------+-----+---------+----------------+
+3 rows in set (0.0122 sec)
+ MySQL  localhost:3307  eva2  SQL > show create table venta;
++-------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table | Create Table                                                                                                                                                                                                                                                                               |
++-------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| venta | CREATE TABLE `venta` (
+  `id_venta` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cliente` int(11) NOT NULL,
+  `fecha_venta` date DEFAULT NULL,
+  PRIMARY KEY (`id_venta`),
+  KEY `id_cliente` (`id_cliente`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci |
++-------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0019 sec)
+ MySQL  localhost:3307  eva2  SQL > create table carrera(
+                                 -> id_carrera int not null key auto_increment,
+                                 -> nombre_carrera varchar(50) not null);
+Query OK, 0 rows affected (0.0254 sec)
+ MySQL  localhost:3307  eva2  SQL > create table venta(
+                                 -> id^C
+ MySQL  localhost:3307  eva2  SQL > create table carrera(
+                                 -> id_carrera int not null key auto_increment^C
+ MySQL  localhost:3307  eva2  SQL > create table estudiante(
+                                 -> id_estudiante int not null key auto_increment,
+                                 -> id_carrera int not nul,
+                                 -> nombre varchar(50) not null);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'nul,
+nombre varchar(50) not null)' at line 3
+ MySQL  localhost:3307  eva2  SQL > create table estudiante( id_estudiante int not null key auto_increment, id_carrera int not null, nombre varchar(50) not null);
+Query OK, 0 rows affected (0.0066 sec)
+ MySQL  localhost:3307  eva2  SQL > drop table carrera;
+Query OK, 0 rows affected (0.0099 sec)
+ MySQL  localhost:3307  eva2  SQL > CREATE TABLE estudiante(
+                                 ->     id_estudiante int not null key auto_increment,
+                                 ->     id_carrera int not null,
+                                 ->     nombre varchar(50) not null,
+                                 ->     FOREIGN KEY (id_carrera) REFERENCES carrera(id_carrera)
+                                 ->     ON UPDATE CASCADE
+                                 ->     ON DELETE RESTRICT
+                                 -> );
+ERROR: 1050 (42S01): Table 'estudiante' already exists
+ MySQL  localhost:3307  eva2  SQL > drop table estudiante;
+Query OK, 0 rows affected (0.0054 sec)
+ MySQL  localhost:3307  eva2  SQL > CREATE TABLE estudiante(      id_estudiante int not null key auto_increment,      id_carrera int not null,      nombre varchar(50) not null,     FOREIGN KEY (id_carrera) REFERENCES carrera(id_carrera)      ON UPDATE CASCADE      ON DELETE RESTRICT );
+ERROR: 1005 (HY000): Can't create table `eva2`.`estudiante` (errno: 150 "Foreign key constraint is incorrectly formed")
+ MySQL  localhost:3307  eva2  SQL > create table carrera( id_carrera int not null key auto_increment, nombre_carrera varchar(50) not null);
+Query OK, 0 rows affected (0.0051 sec)
+ MySQL  localhost:3307  eva2  SQL > create table estudiante( id_estudiante int not null key auto_increment, id_carrera int not null, nombre varchar(50) not null);
+Query OK, 0 rows affected (0.0051 sec)
+ MySQL  localhost:3307  eva2  SQL > ALTER TABLE estudiante
+                                 -> ADD FOREIGN KEY (id_carrera) REFERENCES carrera(id_carrera)
+                                 -> ON UPDATE CASCADE
+                                 -> ON DELETE RESTRICT;
+Query OK, 0 rows affected (0.0195 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3307  eva2  SQL > desc estudiante;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| id_estudiante | int(11)     | NO   | PRI | NULL    | auto_increment |
+| id_carrera    | int(11)     | NO   | MUL | NULL    |                |
+| nombre        | varchar(50) | NO   |     | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.0138 sec)
+ MySQL  localhost:3307  eva2  SQL > insert into estudiante(nombre,id_carrera)
+                                 -> values("Luis",1),("pedro",2),("carmen",3);
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`eva2`.`estudiante`, CONSTRAINT `estudiante_ibfk_1` FOREIGN KEY (`id_carrera`) REFERENCES `carrera` (`id_carrera`) ON UPDATE CASCADE)
+ MySQL  localhost:3307  eva2  SQL > desc carrera;
++----------------+-------------+------+-----+---------+----------------+
+| Field          | Type        | Null | Key | Default | Extra          |
++----------------+-------------+------+-----+---------+----------------+
+| id_carrera     | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre_carrera | varchar(50) | NO   |     | NULL    |                |
++----------------+-------------+------+-----+---------+----------------+
+2 rows in set (0.0150 sec)
+ MySQL  localhost:3307  eva2  SQL > insert into carrera(nombre_carrera)
+                                 -> vlaues("insdustrial"),("ISC"),("ARQ");
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'vlaues("insdustrial"),("ISC"),("ARQ")' at line 2
+ MySQL  localhost:3307  eva2  SQL > insert into carrera(nombre_carrera) vlaues('insdustria'),('ISC'),('ARQ');
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'vlaues('insdustria'),('ISC'),('ARQ')' at line 1
+ MySQL  localhost:3307  eva2  SQL > INSERT INTO carrera (nombre_carrera)
+                                 -> VALUES ('Sistemas'), ('Industrial'), ('Administración');
+Query OK, 3 rows affected (0.0014 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3307  eva2  SQL > insert into estudiante(nombre,id_carrera) values("Luis",1),("pedro",2),("carmen",3);
+
+Query OK, 3 rows affected (0.0013 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3307  eva2  SQL > select*from estudiante;
++---------------+------------+--------+
+| id_estudiante | id_carrera | nombre |
++---------------+------------+--------+
+|             4 |          1 | Luis   |
+|             5 |          2 | pedro  |
+|             6 |          3 | carmen |
++---------------+------------+--------+
+3 rows in set (0.0006 sec)
+ MySQL  localhost:3307  eva2  SQL > show create table estudiante;
++------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table      | Create Table                                                                                                                                                                                                                                                                                                                                                                                                               |
++------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| estudiante | CREATE TABLE `estudiante` (
+  `id_estudiante` int(11) NOT NULL AUTO_INCREMENT,
+  `id_carrera` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_estudiante`),
+  KEY `id_carrera` (`id_carrera`),
+  CONSTRAINT `estudiante_ibfk_1` FOREIGN KEY (`id_carrera`) REFERENCES `carrera` (`id_carrera`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci |
++------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0004 sec)
+ MySQL  localhost:3307  eva2  SQL > create table cliente(
+                                 -> id_cliente int not null key auto_increment,
+                                 -> nombre varchar(50) not null);
+ERROR: 1050 (42S01): Table 'cliente' already exists
+ MySQL  localhost:3307  eva2  SQL > create table cliente_c( id_cliente int not null key auto_increment, nombre varchar(50) not null);
+Query OK, 0 rows affected (0.0077 sec)
+ MySQL  localhost:3307  eva2  SQL > create table comida(
+                                 -> id_comida int not null key auto_increment,
+                                 -> id_cliente int not null,
+                                 -> comida_fav varchar(50) not null);
+Query OK, 0 rows affected (0.0054 sec)
+ MySQL  localhost:3307  eva2  SQL > alter table comida
+                                 -> create table comida( id_comida int not null key auto_increment, id_cliente i^C
+ MySQL  localhost:3307  eva2  SQL > alter table comida
+                                 -> add foreign key(id_cliente) references cliente(id_cliente)
+                                 -> on delete set null
+                                 -> on update cascade;
+ERROR: 1005 (HY000): Can't create table `eva2`.`comida` (errno: 150 "Foreign key constraint is incorrectly formed")
+ MySQL  localhost:3307  eva2  SQL > ALTER TABLE comida
+                                 -> MODIFY id_cliente int NULL,
+                                 -> ADD FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
+                                 -> ON DELETE SET NULL
+                                 -> ON UPDATE CASCADE;
+ERROR: 1005 (HY000): Can't create table `eva2`.`comida` (errno: 150 "Foreign key constraint is incorrectly formed")
+ MySQL  localhost:3307  eva2  SQL > ALTER TABLE comida MODIFY id_cliente int NULL;
+Query OK, 0 rows affected (0.0137 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3307  eva2  SQL > ALTER TABLE comida
+                                 -> ADD FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
+                                 -> ON DELETE SET NULL
+                                 -> ON UPDATE CASCADE;
+ERROR: 1005 (HY000): Can't create table `eva2`.`comida` (errno: 150 "Foreign key constraint is incorrectly formed")
+ MySQL  localhost:3307  eva2  SQL > ALTER TABLE comida  ADD FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)  ON DELETE SET NULL  ON UPDATE CASCADE;
