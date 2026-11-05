@@ -1,0 +1,405 @@
+MySQL Shell 8.4.10
+
+Copyright (c) 2016, 2026, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+WARNING: Found errors loading plugins, for more details look at the log at: C:\Users\fdo_g\AppData\Roaming\MySQL\mysqlsh\mysqlsh.log
+ MySQL  SQL > \connect root@localhost:3307
+Creating a session to 'root@localhost:3307'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 4
+Server version: 11.4.9-MariaDB MariaDB Server
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3307  SQL > set session default_storage_engine='InnoDB';
+Query OK, 0 rows affected (0.0009 sec)
+ MySQL  localhost:3307  SQL > set global default_storage_engine = 'InnoDB';
+Query OK, 0 rows affected (0.0016 sec)
+ MySQL  localhost:3307  SQL > SHOW VARIABLES LIKE 'default_storage_engine';
++------------------------+--------+
+| Variable_name          | Value  |
++------------------------+--------+
+| default_storage_engine | InnoDB |
++------------------------+--------+
+1 row in set (0.0067 sec)
+ MySQL  localhost:3307  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| employees          |
+| eva1               |
+| eva1_copia         |
+| eva2               |
+| information_schema |
+| mysql              |
+| northwind          |
+| performance_schema |
+| sakila             |
+| sys                |
+| tbd_exa1           |
+| test               |
+| world_x            |
++--------------------+
+13 rows in set (0.0047 sec)
+ MySQL  localhost:3307  SQL > use mysql;
+Default schema set to `mysql`.
+Fetching global names, object names from `mysql` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3307  mysql  SQL > show tables;
++---------------------------+
+| Tables_in_mysql           |
++---------------------------+
+| column_stats              |
+| columns_priv              |
+| db                        |
+| event                     |
+| func                      |
+| general_log               |
+| global_priv               |
+| gtid_slave_pos            |
+| help_category             |
+| help_keyword              |
+| help_relation             |
+| help_topic                |
+| index_stats               |
+| innodb_index_stats        |
+| innodb_table_stats        |
+| plugin                    |
+| proc                      |
+| procs_priv                |
+| proxies_priv              |
+| roles_mapping             |
+| servers                   |
+| slow_log                  |
+| table_stats               |
+| tables_priv               |
+| time_zone                 |
+| time_zone_leap_second     |
+| time_zone_name            |
+| time_zone_transition      |
+| time_zone_transition_type |
+| transaction_registry      |
+| user                      |
++---------------------------+
+31 rows in set (0.0011 sec)
+ MySQL  localhost:3307  mysql  SQL > desc user;
++------------------------+---------------------+------+-----+----------+-------+
+| Field                  | Type                | Null | Key | Default  | Extra |
++------------------------+---------------------+------+-----+----------+-------+
+| Host                   | char(255)           | NO   |     |          |       |
+| User                   | char(128)           | NO   |     |          |       |
+| Password               | longtext            | YES  |     | NULL     |       |
+| Select_priv            | varchar(1)          | YES  |     | NULL     |       |
+| Insert_priv            | varchar(1)          | YES  |     | NULL     |       |
+| Update_priv            | varchar(1)          | YES  |     | NULL     |       |
+| Delete_priv            | varchar(1)          | YES  |     | NULL     |       |
+| Create_priv            | varchar(1)          | YES  |     | NULL     |       |
+| Drop_priv              | varchar(1)          | YES  |     | NULL     |       |
+| Reload_priv            | varchar(1)          | YES  |     | NULL     |       |
+| Shutdown_priv          | varchar(1)          | YES  |     | NULL     |       |
+| Process_priv           | varchar(1)          | YES  |     | NULL     |       |
+| File_priv              | varchar(1)          | YES  |     | NULL     |       |
+| Grant_priv             | varchar(1)          | YES  |     | NULL     |       |
+| References_priv        | varchar(1)          | YES  |     | NULL     |       |
+| Index_priv             | varchar(1)          | YES  |     | NULL     |       |
+| Alter_priv             | varchar(1)          | YES  |     | NULL     |       |
+| Show_db_priv           | varchar(1)          | YES  |     | NULL     |       |
+| Super_priv             | varchar(1)          | YES  |     | NULL     |       |
+| Create_tmp_table_priv  | varchar(1)          | YES  |     | NULL     |       |
+| Lock_tables_priv       | varchar(1)          | YES  |     | NULL     |       |
+| Execute_priv           | varchar(1)          | YES  |     | NULL     |       |
+| Repl_slave_priv        | varchar(1)          | YES  |     | NULL     |       |
+| Repl_client_priv       | varchar(1)          | YES  |     | NULL     |       |
+| Create_view_priv       | varchar(1)          | YES  |     | NULL     |       |
+| Show_view_priv         | varchar(1)          | YES  |     | NULL     |       |
+| Create_routine_priv    | varchar(1)          | YES  |     | NULL     |       |
+| Alter_routine_priv     | varchar(1)          | YES  |     | NULL     |       |
+| Create_user_priv       | varchar(1)          | YES  |     | NULL     |       |
+| Event_priv             | varchar(1)          | YES  |     | NULL     |       |
+| Trigger_priv           | varchar(1)          | YES  |     | NULL     |       |
+| Create_tablespace_priv | varchar(1)          | YES  |     | NULL     |       |
+| Delete_history_priv    | varchar(1)          | YES  |     | NULL     |       |
+| ssl_type               | varchar(9)          | YES  |     | NULL     |       |
+| ssl_cipher             | longtext            | NO   |     |          |       |
+| x509_issuer            | longtext            | NO   |     |          |       |
+| x509_subject           | longtext            | NO   |     |          |       |
+| max_questions          | bigint(20) unsigned | NO   |     | 0        |       |
+| max_updates            | bigint(20) unsigned | NO   |     | 0        |       |
+| max_connections        | bigint(20) unsigned | NO   |     | 0        |       |
+| max_user_connections   | bigint(21)          | NO   |     | 0        |       |
+| plugin                 | longtext            | NO   |     |          |       |
+| authentication_string  | longtext            | NO   |     |          |       |
+| password_expired       | varchar(1)          | NO   |     |          |       |
+| is_role                | varchar(1)          | YES  |     | NULL     |       |
+| default_role           | longtext            | NO   |     |          |       |
+| max_statement_time     | decimal(12,6)       | NO   |     | 0.000000 |       |
++------------------------+---------------------+------+-----+----------+-------+
+47 rows in set (0.0163 sec)
+ MySQL  localhost:3307  mysql  SQL > select host,user from user;
++-----------------+-------------+
+| Host            | User        |
++-----------------+-------------+
+|                 | PUBLIC      |
+| 127.0.0.1       | root        |
+| ::1             | root        |
+| laptop-2s6itqje |             |
+| laptop-2s6itqje | root        |
+| localhost       |             |
+| localhost       | mariadb.sys |
+| localhost       | root        |
++-----------------+-------------+
+8 rows in set (0.0016 sec)
+ MySQL  localhost:3307  mysql  SQL > create user 'prueba6''@''localhost' identify by "1234";
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'identify by "1234"' at line 1
+ MySQL  localhost:3307  mysql  SQL > create user 'prueba6''@''localhost' identified by "1234";
+Query OK, 0 rows affected (0.0075 sec)
+ MySQL  localhost:3307  mysql  SQL > select host,user from user;
++-----------------+---------------------+
+| Host            | User                |
++-----------------+---------------------+
+|                 | PUBLIC              |
+| %               | prueba6'@'localhost |
+| 127.0.0.1       | root                |
+| ::1             | root                |
+| laptop-2s6itqje |                     |
+| laptop-2s6itqje | root                |
+| localhost       |                     |
+| localhost       | mariadb.sys         |
+| localhost       | root                |
++-----------------+---------------------+
+9 rows in set (0.0012 sec)
+ MySQL  localhost:3307  mysql  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| employees          |
+| eva1               |
+| eva1_copia         |
+| eva2               |
+| information_schema |
+| mysql              |
+| northwind          |
+| performance_schema |
+| sakila             |
+| sys                |
+| tbd_exa1           |
+| test               |
+| world_x            |
++--------------------+
+13 rows in set (0.0010 sec)
+ MySQL  localhost:3307  mysql  SQL > \disconnect
+ MySQL  SQL > \connect --mc prueba6@localhost
+Creating a Classic session to 'prueba6@localhost'
+Please provide the password for 'prueba6@localhost': ****
+MySQL Error 1045 (28000): Access denied for user 'prueba6'@'localhost' (using password: YES)
+ MySQL  SQL > DROP USER 'prueba6''@''localhost'@'%';
+ERROR: Not connected.
+ MySQL  SQL > \connect root@localhost:3307
+Creating a session to 'root@localhost:3307'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 6
+Server version: 11.4.9-MariaDB MariaDB Server
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3307  SQL > DROP USER 'prueba6''@''localhost'@'%';
+Query OK, 0 rows affected (0.0034 sec)
+ MySQL  localhost:3307  SQL > CREATE USER 'prueba6'@'localhost' IDENTIFIED BY '1234';
+Query OK, 0 rows affected (0.0030 sec)
+ MySQL  localhost:3307  SQL > \disconect
+Unknown command: '\disconect'
+ MySQL  localhost:3307  SQL > \disconnect
+ MySQL  SQL > \connect --mc prueba6@localhost
+Creating a Classic session to 'prueba6@localhost'
+Please provide the password for 'prueba6@localhost': ****
+MySQL Error 1045 (28000): Access denied for user 'prueba6'@'localhost' (using password: YES)
+ MySQL  SQL > \connect --mc prueba6@localhost:3307
+Creating a Classic session to 'prueba6@localhost:3307'
+Please provide the password for 'prueba6@localhost:3307': ****
+Save password for 'prueba6@localhost:3307'? [Y]es/[N]o/Ne[v]er (default No): n
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 7
+Server version: 11.4.9-MariaDB MariaDB Server
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3307  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| test               |
++--------------------+
+2 rows in set (0.0013 sec)
+ MySQL  localhost:3307  SQL > all on eva1.*to 'prueba6'@'localhost';
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'all on eva1.*to 'prueba6'@'localhost'' at line 1
+ MySQL  localhost:3307  SQL > GRANT ALL PRIVILEGES ON eva1.* TO 'prueba6'@'localhost';
+ERROR: 1044 (42000): Access denied for user 'prueba6'@'localhost' to database 'eva1'
+ MySQL  localhost:3307  SQL > create user 'prueba'@'localhost' identified byr"1234";
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'byr"1234"' at line 1
+ MySQL  localhost:3307  SQL > create user 'prueba'@'localhost' identified by"1234";
+ERROR: 1227 (42000): Access denied; you need (at least one of) the CREATE USER privilege(s) for this operation
+ MySQL  localhost:3307  SQL > create user 'prueba7'@'localhost' identified by"1234";
+ERROR: 1227 (42000): Access denied; you need (at least one of) the CREATE USER privilege(s) for this operation
+ MySQL  localhost:3307  SQL > \disconnect
+ MySQL  SQL > \connect root@localhost:3307
+Creating a session to 'root@localhost:3307'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 9
+Server version: 11.4.9-MariaDB MariaDB Server
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3307  SQL > CREATE USER 'prueba7'@'localhost' IDENTIFIED BY '1234';
+Query OK, 0 rows affected (0.0022 sec)
+ MySQL  localhost:3307  SQL > grant all on eva1.actor to 'prueba7'@'localhost';
+Query OK, 0 rows affected (0.0040 sec)
+ MySQL  localhost:3307  SQL > \disconnect
+ MySQL  SQL > \connect root@localhost:3307
+Creating a session to 'root@localhost:3307'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 11
+Server version: 11.4.9-MariaDB MariaDB Server
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3307  SQL > create user 'prueba8'@'localhost';
+Query OK, 0 rows affected (0.0026 sec)
+ MySQL  localhost:3307  SQL > grant select(first_name) on t1.actor to 'prueba8'@'localhost';
+ERROR: 1146 (42S02): Table 't1.actor' doesn't exist
+ MySQL  localhost:3307  SQL > grant select(first_name) on eva1.actor to 'prueba8'@'localhost';
+ERROR: 1146 (42S02): Table 'eva1.actor' doesn't exist
+ MySQL  localhost:3307  SQL > show tables;
+ERROR: 1046 (3D000): No database selected
+ MySQL  localhost:3307  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| employees          |
+| eva1               |
+| eva1_copia         |
+| eva2               |
+| information_schema |
+| mysql              |
+| northwind          |
+| performance_schema |
+| sakila             |
+| sys                |
+| tbd_exa1           |
+| test               |
+| world_x            |
++--------------------+
+13 rows in set (0.0013 sec)
+ MySQL  localhost:3307  SQL > desc eva1;
+ERROR: 1046 (3D000): No database selected
+ MySQL  localhost:3307  SQL > use eva1;
+Default schema set to `eva1`.
+Fetching global names, object names from `eva1` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3307  eva1  SQL > desc actor;
+ERROR: 1146 (42S02): Table 'eva1.actor' doesn't exist
+ MySQL  localhost:3307  eva1  SQL > desc tables;
+ERROR: 1146 (42S02): Table 'eva1.tables' doesn't exist
+ MySQL  localhost:3307  eva1  SQL > desc eva1;
+ERROR: 1146 (42S02): Table 'eva1.eva1' doesn't exist
+ MySQL  localhost:3307  eva1  SQL > use eva1_copia;
+Default schema set to `eva1_copia`.
+Fetching global names, object names from `eva1_copia` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3307  eva1_copia  SQL > show tables;
++----------------------+
+| Tables_in_eva1_copia |
++----------------------+
+| persona              |
+| persona_datos        |
+| persona_datos2       |
++----------------------+
+3 rows in set (0.0013 sec)
+ MySQL  localhost:3307  eva1_copia  SQL > grant select(first_name) on eva1_copia.persona to 'prueba8'@'localhost';
+ERROR: 1054 (42S22): Unknown column 'first_name' in 'persona'
+ MySQL  localhost:3307  eva1_copia  SQL > grant select(nombre) on eva1_copia.persona to 'prueba8'@'localhost';
+Query OK, 0 rows affected (0.0034 sec)
+ MySQL  localhost:3307  eva1_copia  SQL > use mysql;
+Default schema set to `mysql`.
+Fetching global names, object names from `mysql` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3307  mysql  SQL > desc user;
++------------------------+---------------------+------+-----+----------+-------+
+| Field                  | Type                | Null | Key | Default  | Extra |
++------------------------+---------------------+------+-----+----------+-------+
+| Host                   | char(255)           | NO   |     |          |       |
+| User                   | char(128)           | NO   |     |          |       |
+| Password               | longtext            | YES  |     | NULL     |       |
+| Select_priv            | varchar(1)          | YES  |     | NULL     |       |
+| Insert_priv            | varchar(1)          | YES  |     | NULL     |       |
+| Update_priv            | varchar(1)          | YES  |     | NULL     |       |
+| Delete_priv            | varchar(1)          | YES  |     | NULL     |       |
+| Create_priv            | varchar(1)          | YES  |     | NULL     |       |
+| Drop_priv              | varchar(1)          | YES  |     | NULL     |       |
+| Reload_priv            | varchar(1)          | YES  |     | NULL     |       |
+| Shutdown_priv          | varchar(1)          | YES  |     | NULL     |       |
+| Process_priv           | varchar(1)          | YES  |     | NULL     |       |
+| File_priv              | varchar(1)          | YES  |     | NULL     |       |
+| Grant_priv             | varchar(1)          | YES  |     | NULL     |       |
+| References_priv        | varchar(1)          | YES  |     | NULL     |       |
+| Index_priv             | varchar(1)          | YES  |     | NULL     |       |
+| Alter_priv             | varchar(1)          | YES  |     | NULL     |       |
+| Show_db_priv           | varchar(1)          | YES  |     | NULL     |       |
+| Super_priv             | varchar(1)          | YES  |     | NULL     |       |
+| Create_tmp_table_priv  | varchar(1)          | YES  |     | NULL     |       |
+| Lock_tables_priv       | varchar(1)          | YES  |     | NULL     |       |
+| Execute_priv           | varchar(1)          | YES  |     | NULL     |       |
+| Repl_slave_priv        | varchar(1)          | YES  |     | NULL     |       |
+| Repl_client_priv       | varchar(1)          | YES  |     | NULL     |       |
+| Create_view_priv       | varchar(1)          | YES  |     | NULL     |       |
+| Show_view_priv         | varchar(1)          | YES  |     | NULL     |       |
+| Create_routine_priv    | varchar(1)          | YES  |     | NULL     |       |
+| Alter_routine_priv     | varchar(1)          | YES  |     | NULL     |       |
+| Create_user_priv       | varchar(1)          | YES  |     | NULL     |       |
+| Event_priv             | varchar(1)          | YES  |     | NULL     |       |
+| Trigger_priv           | varchar(1)          | YES  |     | NULL     |       |
+| Create_tablespace_priv | varchar(1)          | YES  |     | NULL     |       |
+| Delete_history_priv    | varchar(1)          | YES  |     | NULL     |       |
+| ssl_type               | varchar(9)          | YES  |     | NULL     |       |
+| ssl_cipher             | longtext            | NO   |     |          |       |
+| x509_issuer            | longtext            | NO   |     |          |       |
+| x509_subject           | longtext            | NO   |     |          |       |
+| max_questions          | bigint(20) unsigned | NO   |     | 0        |       |
+| max_updates            | bigint(20) unsigned | NO   |     | 0        |       |
+| max_connections        | bigint(20) unsigned | NO   |     | 0        |       |
+| max_user_connections   | bigint(21)          | NO   |     | 0        |       |
+| plugin                 | longtext            | NO   |     |          |       |
+| authentication_string  | longtext            | NO   |     |          |       |
+| password_expired       | varchar(1)          | NO   |     |          |       |
+| is_role                | varchar(1)          | YES  |     | NULL     |       |
+| default_role           | longtext            | NO   |     |          |       |
+| max_statement_time     | decimal(12,6)       | NO   |     | 0.000000 |       |
++------------------------+---------------------+------+-----+----------+-------+
+47 rows in set (0.0173 sec)
+ MySQL  localhost:3307  mysql  SQL > select host,user from user;
++-----------------+-------------+
+| Host            | User        |
++-----------------+-------------+
+|                 | PUBLIC      |
+| 127.0.0.1       | root        |
+| ::1             | root        |
+| laptop-2s6itqje |             |
+| laptop-2s6itqje | root        |
+| localhost       |             |
+| localhost       | mariadb.sys |
+| localhost       | prueba6     |
+| localhost       | prueba7     |
+| localhost       | prueba8     |
+| localhost       | root        |
++-----------------+-------------+
+11 rows in set (0.0012 sec)
+ MySQL  localhost:3307  mysql  SQL > select * from user
+                                  -> where user=prueba8;
+ERROR: 1054 (42S22): Unknown column 'prueba8' in 'WHERE'
+ MySQL  localhost:3307  mysql  SQL > \disconnect
+ MySQL  SQL > \connect prueba8localhost
+Creating a session to 'fdo_g@prueba8localhost'
+Please provide the password for 'fdo_g@prueba8localhost': ****
+MySQL Error 2005: No such host is known 'prueba8localhost'
+ MySQL  SQL > \connect prueba7 localhost
+Creating a session to 'fdo_g@localhost'
+Please provide the password for 'fdo_g@localhost': ****
+MySQL Error 1045 (28000): Access denied for user 'fdo_g'@'localhost' (using password: YES)
+ MySQL  SQL > \connect root@localhost:3307
+Creating a session to 'root@localhost:3307'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 17
+Server version: 11.4.9-MariaDB MariaDB Server
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3307  SQL > drop user 'prueba8'@'localhost';
+Query OK, 0 rows affected (0.0027 sec)
+(i-search)`':
